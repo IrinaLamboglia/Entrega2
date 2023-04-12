@@ -12,20 +12,6 @@ notas_1 =  [81, 60, 72, 24, 15, 91, 12, 70, 29, 42, 16, 3, 35, 67, 10, 57, 11, 6
 notas_2 =  [30, 95, 28, 84, 84, 43, 66, 51, 4, 11, 58, 10, 13, 34, 96, 71, 86, 37,
 64, 13, 8, 87, 14, 14, 49, 27, 55, 69, 77, 59, 57, 40, 96, 24, 30, 73,
 95, 19, 47, 15, 31, 39, 15, 74, 33, 57, 10]
-# def opcionB():
-#     combinar_notas = zip(notas_1,notas_2)
-#     print(combinar_notas)
-#     combinar_todo = zip(nombres,combinar_notas)
-#     print(combinar_todo)
-# 
-# list_nombres = nombres.replace("\n"," ").replace("'"," ").split(',')
- 
-# combinado = list(zip(list_nombres,notas_1, notas_2))
-
-# print(combinado)
-# print(lista.[0])
-
-# opcionB()  
 
 def opcionA ():
     lis_nombres = nombres.replace("\n"," ").split(',')
