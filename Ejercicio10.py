@@ -13,31 +13,50 @@ notas_2 =  [30, 95, 28, 84, 84, 43, 66, 51, 4, 11, 58, 10, 13, 34, 96, 71, 86, 3
 64, 13, 8, 87, 14, 14, 49, 27, 55, 69, 77, 59, 57, 40, 96, 24, 30, 73,
 95, 19, 47, 15, 31, 39, 15, 74, 33, 57, 10]
 
-def opcionA ():
-    lis_nombres = nombres.replace("\n"," ").split(',')
-    return list(zip(lis_nombres,notas_1,notas_2))
+lis_nombres = nombres.replace("\n","").replace("\'","").replace(" ","").split(',')
 
-def opcionB(lista):
-    resultado = map(lambda x: (x[1] + x[2])/2,lista)
-    return list(resultado)
+#Genero un diccionario donde las contraseñas son los nombres de los alumnos que contienen sus notas dos en una tupla.
+def generarEstructura ():
+    notas = zip(notas_1,notas_2) 
+    return dict(zip(lis_nombres,notas))
 
-def opcionC(lista):
-    suma = list(map(lambda x: x[1] + x[2],lista))
-    #suma =  sum([sum(nota[1:]) for nota in lista]) / (len(lista)*2)
-    return (sum(suma) / (len(lista)*2))
+#Calculo el promedio para cada estudiante y lo guardo en un diccionario nuevo donde nuevamente las contradeñas son los nombres y el valor es el promedio de sus dos notas.
+def promedioPorEstudiante(Notas):
+    resultado = map(lambda key: (Notas[key][0]+ Notas[key][1])/len(Notas[key]),Notas)
+    return dict(zip(lis_nombres,resultado))
 
-def opcionD(lista):
-    notaMax = max(lista , key = lambda x: (x[1] + x[2] / 2))
-    return notaMax[0]
+#Usando el diccionario creado en promedioPorEstudiante sumo todos los valor y luego saco su promedio.
+def promedioGeneral(Promedios):
+    suma = sum(Promedios.values())
+    return suma / len(Promedios)
 
-def opcionE(lista):
-    notaMin = min(lista, key = lambda x: (x[1] + x[2])/2)
-    return  notaMin[0]
+#Usando nuevamente el diccionario creado en promedioPorEstudiante busco el nombre de la persona que tiene un mayor promeio.
+def mayorPromedio(Promedios):
+    nombreMax = max(Promedios, key=Promedios.get)
+    return (nombreMax, Promedios[nombreMax]) #Devuelvo una tupla que contiene el nombre y la nota promedio mas alta del estudiante.
 
+#Con la estructura generada en generarEstructura busco el nombre del estudiante que obtuvo menor nota.
+def notaMinima(Notas):
+    nombreMin = min(Notas, key = lambda x: min(Notas[x]))
+    return (nombreMin,min(Notas[nombreMin]))#Vuelvo hacer un minimo pero de nombremin asi retorna el nombre que obtuvo menor nota con su nota correspondiente, porque cada estudiante contenia una tupla de sus dos notas.
 
-combinado = opcionA()
+#Guardo funciones en una variable porque algunas las utilizo mas de una vez y para no llamarlas cada vez que las necesite las pongo en una variable.
+combinado = generarEstructura() 
+promPorEstu = promedioPorEstudiante(combinado)
+promedioGene = promedioGeneral(promPorEstu)
+mayorProm = mayorPromedio(promPorEstu)
+notaMin = notaMinima(combinado)
+
+#Imprimo todo lo retornado;
+print("-"*60)
+print("CADA NOMBRE ASOCIADO A SUS DOS NOTAS")
 print (combinado)
-print(opcionB(combinado))
-print(opcionC(combinado))
-print(opcionD(combinado))
-print(opcionE(combinado))
+print("-"*60)
+print("PROMEDIO ENTRE SUS NOTAS POR CADA ESTUDIANTE");
+print(promPorEstu)
+print("-"*60)
+print(f"El promedio de las notas de todo el curso es [{promedioGene}]")
+print("-"*60)
+print(f"La nota y el alumno/a que obtuvo mayor promedio entre sus notas es: {mayorProm[0]} con el promedio {mayorProm[1]}.")
+print("-"*60)
+print(f"El alumno/a {notaMin[0]} obtuvo la nota minima que fue {notaMin[1]}.")
